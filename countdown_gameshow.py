@@ -42,7 +42,7 @@ def eval_combination(x1, o1, x2, o2, x3, o3, x4, o4, x5, o5, x6):
     result = eval_single(result, o2, x3)
     result = eval_single(result, o3, x4)
     result = eval_single(result, o4, x5)
-    retult = eval_single(result, o5, x6)
+    result = eval_single(result, o5, x6)
     return result
 
 def mix_operators():
