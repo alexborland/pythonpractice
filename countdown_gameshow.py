@@ -15,3 +15,12 @@ def get_input():
 # challenge input:
 # 25 100 9 7 3 7 881 -> 7 * 3 + 100 * 7 + 25 + 9 = 881
 # 6 75 3 25 50 100 952 -> 100 + 6 * 3 * 75 - 50 / 25 = 952
+
+while True:
+    try:
+        numbers = get_input()
+        operands = numbers[0:5]
+        target = numbers[6]
+        break
+    except:
+        print("Please enter exactly 7 numbers.")
