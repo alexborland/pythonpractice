@@ -50,7 +50,6 @@ def eval_combination(operands, operators):
 
 def mix_operators(size):
     operators = ["+", "-", "*", "/"]
-    #return [["*", "+", "*", "+", "+"]]
     return itertools.product(operators, repeat = size)
 
 def find_solution(operands, target):
