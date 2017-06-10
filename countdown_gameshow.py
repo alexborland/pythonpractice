@@ -34,58 +34,42 @@ def eval_single(x1, o1, x2):
         return None
     
 
-def eval_combination(x1, o1, x2, o2, x3, o3, x4, o4, x5, o5, x6):
+def eval_combination(operands, operators):
     valid_operators = ["+", "-", "*", "/"]
-    for o in [o1, o2, o3, o4, o5]:
+    for o in operators:
         assert o in set(valid_operators)
-    result = eval_single(x1, o1, x2)
-    result = eval_single(result, o2, x3)
-    result = eval_single(result, o3, x4)
-    result = eval_single(result, o4, x5)
-    result = eval_single(result, o5, x6)
+    assert len(operators) == len(operands) - 1
+    result = operands[0]
+    for i in range(len(operators)):
+        result = eval_single(result, operators[i], operands[i + 1])
     return result
 
-def mix_operators():
+def mix_operators(size):
     operators = ["+", "-", "*", "/"]
-    result = []
-    for i in operators:
-        for j in operators:
-            for k in operators:
-                for m in operators:
-                    for n in operators:
-                        result.append([i, j, k, m, n])
-    return result
+    #return [["*", "+", "*", "+", "+"]]
+    return itertools.product(operators, repeat = size)
 
-def find_solution(x1, x2, x3, x4, x5, x6, target):
-    operands = [x1, x2, x3, x4, x5, x6]
+def find_solution(operands, target):
+    solution_results = []
     for i in itertools.permutations(operands):
-        for j in mix_operators():
-            print(i[0], j[0], i[1], j[1], i[2], j[2], i[3], j[3], i[4], j[4], i[5])
-            if eval_combination(i[0], j[0], i[1], j[1], i[2], j[2], i[3], j[3], i[4], j[4], i[5]) == target:
-                return {"operands": i, "operators": j}
+        for j in mix_operators(len(operands) - 1):
+            if eval_combination(i, j) == target:
+                solution_results.append({"operands": i, "operators": j})
+    return solution_results
 
-while True:
-    try:
-        numbers = get_input()
-        operands = numbers[0:6]
-        target = numbers[6]
-        break
-    except:
-        print("Please enter exactly 7 numbers.")
+numbers = get_input()
+target = numbers.pop(-1)
+operands = numbers
 
-print(f"Operands: {operands}")
-print(f"Target: {target}")
+print(f"Target is {target}")
+print(f"Operands are {operands}")
 
-solution = find_solution(operands[0], operands[1], operands[2], operands[3],
-operands[4], operands[5], target)
+solutions = find_solution(operands, target)
 
-out_string = ""
-for i in range(5):
-    out_string += str(solution['operands'][i])
-    out_string += " "
-    out_string += solution['operators'][i]
-    out_string += " "
-out_string += str(solution['operands'][5])
-out_string += " = " + str(target)
-
-print(out_string)
+for solution in solutions:
+    print_string = str(solution["operands"][0])
+    for i in range(len(solution["operators"])):
+        print_string += " " + solution["operators"][i]
+        print_string += " " + str(solution["operands"][i + 1])
+    print_string += " = " + str(target)
+    print(print_string)
