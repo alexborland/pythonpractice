@@ -10,6 +10,10 @@
 # challenge input:
 # 25 100 9 7 3 7 881 -> 7 * 3 + 100 * 7 + 25 + 9 = 881
 # 6 75 3 25 50 100 952 -> 100 + 6 * 3 * 75 - 50 / 25 = 952
+
+# Another interesting idea is to generalize
+# to an input string of arbitrary length
+
 import itertools
 
 def get_input():
