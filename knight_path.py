@@ -27,10 +27,14 @@ def checking_function(paths, dest):
 
 def find_path(c_orig, c_dest):
     current_paths = [[c_orig]]
+    squares_visited = [c_orig]
     while not checking_function(current_paths, c_dest):
         new_paths = []
         for path in current_paths:
-            new_paths += possible_jumps(path)
+            for p in possible_jumps(path):
+                if p[-1] not in squares_visited:
+                    squares_visited += [p[-1]]
+                    new_paths += [p]
         current_paths += new_paths
     return checking_function(current_paths, c_dest)
 
